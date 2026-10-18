@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette drawn from Nataliia's work: milky pink, nude, mocha, lilac. */
+  --color-ivory: #fbf7f4;
+  --color-cream: #f5ece6;
+  --color-beige: #e2cfc4;
+  --color-blush: #f2dcd9;
+  --color-blush-dark: #c48b8c;
+  --color-lilac: #e4ddef;
+  --color-accent: #8c5f55; /* mocha rose — accent text, passes 4.5:1 on white */
+  --color-beige-dark: #8c5f55;
+  --color-ink: #1d1817;
+  --color-muted: #6e625e;
+
+  --font-serif: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.3s ease-out both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+    font-weight: 400;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif font-normal tracking-tight;
+  }
+  ::selection {
+    @apply bg-blush text-ink;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300;
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.25em] text-beige-dark;
+  }
+  .btn-primary {
+    @apply btn bg-ink text-ivory hover:bg-ink/85 hover:shadow-lg hover:shadow-ink/10;
+  }
+  .btn-secondary {
+    @apply btn border border-ink/20 text-ink hover:border-ink hover:bg-ink/[0.03];
+  }
+  .link-underline {
+    @apply underline decoration-beige underline-offset-4 transition-colors hover:decoration-ink;
+  }
+}
+
+/* Scroll-reveal: elements start hidden only when JS has marked them and motion is allowed. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

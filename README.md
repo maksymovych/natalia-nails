@@ -34,23 +34,20 @@ All content lives in a few files. You don't need to touch the page components.
 
 ### 1. Booking link: `src/config/site.ts`
 
-Paste the **verified Fresha booking URL** (the direct link to Nataliia's profile or booking flow,
-not the Fresha homepage) into `FRESHA_BOOKING_URL`:
-
-```ts
-const FRESHA_BOOKING_URL = "https://www.fresha.com/a/...";
-```
+`FRESHA_BOOKING_URL` holds Nataliia's own booking link (her employee profile at ND Beauty Space on
+Fresha). If it changes, paste the new link there. Leave out any `cartId=` parameter, because that is
+a one-off cart session.
 
 You can also set it as the environment variable `VITE_FRESHA_BOOKING_URL` (see `.env.example`).
 The environment variable takes priority. Only `https://*.fresha.com` links are accepted.
 
-- **Not set:** every "Book" button goes to `/book`, which says online booking is being set up and
-  links to Instagram.
-- **Set:** every "Book" button opens Fresha in a new tab. The site never shows a booking as
-  confirmed. Fresha handles confirmation.
-- **Embed (optional):** set `FRESHA_EMBED_ENABLED = true` to also show Fresha inside the `/book`
-  page. Only do this if the Fresha page actually loads in an iframe. Many Fresha pages block
-  framing, and the external link is the reliable option.
+- Every "Book" button opens Fresha in a new tab. The site never shows a booking as confirmed.
+  Fresha handles confirmation.
+- If the URL is empty or invalid, the buttons fall back to `/book`, which points to Instagram.
+- **No embed:** Fresha sends `frame-ancestors 'self' https://*.fresha.com`, so its booking flow
+  can't be embedded in an iframe on this site. The external link is the supported option.
+
+The studio's address and public Fresha page are under `studio` and `booking.studioUrl`.
 
 ### 2. Portfolio photos: `src/data/portfolio.ts`
 
@@ -70,8 +67,10 @@ The environment variable takes priority. Only `https://*.fresha.com` links are a
    ```
 3. Set `heroImage` at the bottom of the file to the best photo for the home-page hero.
 
-The entries that ship with the project are **templates**. Their image files don't exist yet, so they
-show a neutral "Photo coming soon" tile. Replace them with real photos.
+The current photos were cropped from phone screenshots of her Instagram, with the app UI and icons
+removed. They're small (about 200–540px wide). When the original files are available, drop them in
+with the same filenames and nothing else needs to change. A missing file shows a neutral
+"Photo coming soon" tile instead of a broken image.
 
 Rules: use only Nataliia's own work or photos she has permission to publish. No stock photos.
 Don't scrape Instagram, and don't use Instagram screenshots with app UI. Crop the original photo.
@@ -79,16 +78,16 @@ Portrait 4:5, about 1200–1600px on the long edge, under about 400 KB.
 
 ### 3. Services, prices, durations: `src/data/services.ts`
 
-Copy names, prices and durations **exactly from Fresha**. While `price` or `durationMinutes` is
-`null`, the site shows "Price on Fresha" / "Duration on Fresha" instead of a number. Enter a
-90-minute duration only for services Fresha lists at 90 minutes.
-Set `confirmed: true` for Builder gel/BIAB and French/nail art once Nataliia confirms she offers them.
-Until then they show "Ask about availability". To hide a service, delete its entry.
+Prices and durations were copied from Fresha in October 2026: classic manicure, express gel, classic
+gel, builder gel short/medium, and dry pedicure. Keep them in sync with Fresha and update
+`PRICES_CHECKED`. Nail extensions and French/nail art have no public price yet, so they show
+"Price on Fresha". Fill them in when known. Enter a 90-minute duration only for services Fresha
+lists at 90 minutes.
 
 ### 4. Reviews: `src/data/reviews.ts`
 
-Add only real reviews, copied word-for-word from Fresha or Google. While the list is empty, the home
-page links to Fresha (or Instagram) instead of showing quotes.
+Add only real reviews, copied word-for-word from Fresha, Google or Instagram. The current entries
+come from her Instagram "Reviews" highlight and her public Fresha reviews.
 
 ### 5. Text
 
